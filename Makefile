@@ -1,6 +1,6 @@
 VERSION := 0.0.1
 
-LANGUAGE_NAME := tree-sitter-groovy
+LANGUAGE_NAME := tree-sitter-nextflow
 
 # repository
 SRC_DIR := src

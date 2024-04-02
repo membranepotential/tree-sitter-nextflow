@@ -1,5 +1,5 @@
 {
-  "name": "groovy",
+  "name": "nextflow",
   "word": "identifier",
   "rules": {
     "source_file": {
@@ -4173,3 +4173,4 @@
   "inline": [],
   "supertypes": []
 }
+

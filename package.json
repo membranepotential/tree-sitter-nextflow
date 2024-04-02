@@ -37,8 +37,8 @@
     }
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.20.8",
-    "prebuildify": "^6.0.0"
+    "prebuildify": "^6.0.0",
+    "tree-sitter-cli": "^0.20.8"
   },
   "scripts": {
     "test": "tree-sitter test",
