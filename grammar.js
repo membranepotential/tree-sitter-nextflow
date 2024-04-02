@@ -83,14 +83,43 @@ module.exports = grammar({
         "process",
         field("name", $.identifier),
         "{",
-        //repeat($.function_call),
-        //optional($.input),
-        //optional($.output),
-        //optional($.when),
-        //$.script,
+        repeat($.juxt_function_call),
+        optional($.input),
+        optional($.output),
+        optional($.when),
+        $.script,
         "}",
       ),
 
+    input: $ =>
+      seq(
+        'input:',
+        repeat1($.juxt_function_call),
+      ),
+
+    output: $ =>
+      seq(
+        'output:',
+        repeat1($.juxt_function_call),
+      ),
+
+    when: $ =>
+      seq(
+        'when:',
+        repeat1($.juxt_function_call),
+      ),
+
+    script: $ =>
+      seq(
+        //optional(
+          choice(
+            "script:",
+            "shell:",
+            "exec",
+          ),
+        //),
+        $.string,
+      ),
 
     access_op: ($) =>
       choice(

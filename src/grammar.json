@@ -195,8 +195,129 @@
           "value": "{"
         },
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "juxt_function_call"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "input"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "output"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "when"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "script"
+        },
+        {
           "type": "STRING",
           "value": "}"
+        }
+      ]
+    },
+    "input": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "input:"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "juxt_function_call"
+          }
+        }
+      ]
+    },
+    "output": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "output:"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "juxt_function_call"
+          }
+        }
+      ]
+    },
+    "when": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "when:"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "juxt_function_call"
+          }
+        }
+      ]
+    },
+    "script": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "script:"
+            },
+            {
+              "type": "STRING",
+              "value": "shell:"
+            },
+            {
+              "type": "STRING",
+              "value": "exec"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
         }
       ]
     },
