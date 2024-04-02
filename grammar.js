@@ -48,6 +48,11 @@ module.exports = grammar({
     ),
 
     _statement: $ => prec.left(PREC.STATEMENT, seq(choice(
+      // nextflow-specific
+      //$.include,
+      //$.workflow,
+      $.process,
+      // generic groovy stuff
       $.assertion,
       $.groovy_import,
       $.groovy_package,
@@ -72,6 +77,20 @@ module.exports = grammar({
       alias("continue", $.continue),
       // $.step,
     ), optional(';'))),
+
+    process: $ =>
+      seq(
+        "process",
+        field("name", $.identifier),
+        "{",
+        //repeat($.function_call),
+        //optional($.input),
+        //optional($.output),
+        //optional($.when),
+        //$.script,
+        "}",
+      ),
+
 
     access_op: ($) =>
       choice(

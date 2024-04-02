@@ -615,6 +615,10 @@
           "named": true
         },
         {
+          "type": "process",
+          "named": true
+        },
+        {
           "type": "return",
           "named": true
         },
@@ -835,6 +839,10 @@
         },
         {
           "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "process",
           "named": true
         },
         {
@@ -1108,6 +1116,10 @@
             "named": true
           },
           {
+            "type": "process",
+            "named": true
+          },
+          {
             "type": "return",
             "named": true
           },
@@ -1321,6 +1333,10 @@
             "named": true
           },
           {
+            "type": "process",
+            "named": true
+          },
+          {
             "type": "return",
             "named": true
           },
@@ -1510,6 +1526,10 @@
           },
           {
             "type": "juxt_function_call",
+            "named": true
+          },
+          {
+            "type": "process",
             "named": true
           },
           {
@@ -1706,6 +1726,10 @@
           },
           {
             "type": "juxt_function_call",
+            "named": true
+          },
+          {
+            "type": "process",
             "named": true
           },
           {
@@ -2287,6 +2311,10 @@
             "named": true
           },
           {
+            "type": "process",
+            "named": true
+          },
+          {
             "type": "return",
             "named": true
           },
@@ -2460,6 +2488,10 @@
           },
           {
             "type": "juxt_function_call",
+            "named": true
+          },
+          {
+            "type": "process",
             "named": true
           },
           {
@@ -3142,6 +3174,22 @@
     }
   },
   {
+    "type": "process",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "return",
     "named": true,
     "fields": {},
@@ -3299,6 +3347,10 @@
         },
         {
           "type": "pipeline",
+          "named": true
+        },
+        {
+          "type": "process",
           "named": true
         },
         {
@@ -3797,6 +3849,10 @@
             "named": true
           },
           {
+            "type": "process",
+            "named": true
+          },
+          {
             "type": "return",
             "named": true
           },
@@ -4122,6 +4178,10 @@
           },
           {
             "type": "juxt_function_call",
+            "named": true
+          },
+          {
+            "type": "process",
             "named": true
           },
           {
@@ -4684,6 +4744,10 @@
   },
   {
     "type": "private",
+    "named": false
+  },
+  {
+    "type": "process",
     "named": false
   },
   {
