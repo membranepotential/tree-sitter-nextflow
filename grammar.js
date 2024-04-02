@@ -84,26 +84,30 @@ module.exports = grammar({
         field("name", $.identifier),
         "{",
         repeat($.juxt_function_call),
-        optional($.input),
-        optional($.output),
-        optional($.when),
-        $.script,
+        optional($.input_block),
+        optional($.output_block),
+        optional($.when_block),
+        choice(
+          $.script,
+          $.shell,
+          $.exec,
+        ),
         "}",
       ),
 
-    input: $ =>
+    input_block: $ =>
       seq(
         'input:',
         repeat1($.juxt_function_call),
       ),
 
-    output: $ =>
+    output_block: $ =>
       seq(
         'output:',
         repeat1($.juxt_function_call),
       ),
 
-    when: $ =>
+    when_block: $ =>
       seq(
         'when:',
         repeat1($.juxt_function_call),
@@ -112,13 +116,22 @@ module.exports = grammar({
     script: $ =>
       seq(
         //optional(
-          choice(
             "script:",
-            "shell:",
-            "exec",
-          ),
         //),
+        alias($.string, $.script_string),
+      ),
+
+    // TODO: shell strings have different interpolation characters
+    shell: $ =>
+      seq(
+        "shell:",
         $.string,
+      ),
+
+    exec: $ =>
+      seq(
+        "exec:",
+        repeat($._statement),
       ),
 
     access_op: ($) =>
@@ -545,6 +558,89 @@ module.exports = grammar({
     // ),
 
     return: $ => prec.right(1, seq('return', optional($._expression))), //??????
+
+    script_string: $ => choice(
+      $._plain_script_string,
+      $._interpolate_script_string,
+    ),
+
+    _plain_script_string: $ => choice(
+      seq(
+        '\'',
+        repeat(choice(
+          alias(token.immediate(prec(1, /[^\\'\n]+/)), $.string_content),
+          $.escape_sequence,
+        )),
+        '\'',
+      ),
+      seq(
+        "'''",
+        optional($.shebang),
+        repeat(seq(
+          optional(alias(token.immediate(prec(0, /[']{1,2}/)), $.string_internal_quote)),
+          choice(
+            alias(token.immediate(prec(1, /([^\\']|[']{1,2}[^'\\])+/)), $.string_content),
+            seq(
+              optional(/[']{1,2}/), // edge case: these wont be in string_content
+              $.escape_sequence,
+            ),
+          ))),
+        "'''",
+      ),
+    ),
+
+    _interpolate_script_string: $ => choice(
+      seq(
+        '"',
+        repeat(choice(
+          alias(token.immediate(prec(1, /[^$\\"\n]+/)), $.string_content),
+          $.escape_sequence,
+          $.interpolation,
+        )),
+        '"',
+      ),
+      seq(
+        '"""',
+        optional($.shebang),
+        repeat(seq(
+          // optional(alias(token.immediate(prec(0, /["]{1,2}/)), $.string_internal_quote)),
+          choice(
+            alias(token.immediate(prec(1, /([^$\\"]|["]{1,2}[^"$\\])+/)), $.string_content),
+            seq(
+              optional(/["]{1,2}/), // edge case: these wont be in string_content
+              $.escape_sequence,
+            ),
+            seq(
+              optional(/["]{1,2}/),
+              $.interpolation,
+            ),
+          ))),
+        '"""',
+      ),
+      seq( // slashy string, only slashes can be escaped
+        '/',
+        repeat1(choice(
+          alias(token.immediate(prec(1, /[^$\\\/]+/)), $.string_content),
+          alias('\\/', $.escape_sequence),
+          alias(/\\[^\/]/, $.string_content),
+          $.interpolation,
+        )),
+        '/',
+      ),
+      seq( // dollar slashy string
+        '$/',
+        repeat(choice(
+          alias(token.immediate(prec(1,
+            /([^$\/]|\/[^$]|\$[^\/$a-zA-Z{])+/
+          )), $.string_content),
+          alias('$/', $.escape_sequence),
+          alias('$$', $.escape_sequence),
+          // alias(//, $.string_content),
+          $.interpolation,
+        )),
+        '/$',
+      ),
+    ),
 
     string: $ => choice(
       $._plain_string,
