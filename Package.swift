@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "TreeSitterGroovy",
+    name: "TreeSitterNextflow",
     platforms: [.macOS(.v10_13), .iOS(.v11)],
     products: [
-        .library(name: "TreeSitterGroovy", targets: ["TreeSitterGroovy"]),
+        .library(name: "TreeSitterNextflow", targets: ["TreeSitterNextflow"]),
     ],
     dependencies: [],
     targets: [
-        .target(name: "TreeSitterGroovy",
+        .target(name: "TreeSitterNextflow",
                 path: ".",
                 exclude: [
                     "Cargo.toml",

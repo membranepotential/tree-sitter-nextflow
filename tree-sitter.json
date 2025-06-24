@@ -1,21 +1,19 @@
 {
   "grammars": [
     {
-      "name": "groovy",
-      "camelcase": "Groovy",
-      "scope": "source.groovy",
+      "name": "nextflow",
+      "camelcase": "Nextflow",
+      "scope": "source.nextflow",
       "path": ".",
-      "file-types": [
-        "groovy"
-      ]
+      "file-types": ["nextflow"]
     }
   ],
   "metadata": {
     "version": "0.0.1",
     "license": "MIT",
-    "description": "groovy grammar for tree-sitter",
+    "description": "Nextflow grammar for tree-sitter",
     "links": {
-      "repository": "https://github.com/tree-sitter/tree-sitter-groovy"
+      "repository": "https://github.com/matthuska/tree-sitter-nextflow"
     }
   },
   "bindings": {
