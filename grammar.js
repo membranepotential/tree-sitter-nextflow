@@ -53,7 +53,7 @@ module.exports = grammar({
         optional($.pipeline),
       ),
 
-    shebang: ($) => seq("#!", /[^\n]*/),
+    shebang: ($) => token(prec(100, /\#\![^\n]*/)),
 
     _statement: ($) =>
       prec.left(
@@ -236,13 +236,7 @@ module.exports = grammar({
     // tag: ($) => seq("tag", $._value),
     // time: ($) => seq("time", $._value),
 
-    script: ($) =>
-      seq(
-        //optional(
-        "script:",
-        //),
-        alias($.string, $.script_string),
-      ),
+    script: ($) => seq("script:", $.script_string),
 
     // TODO: shell strings have different interpolation characters
     shell: ($) => seq("shell:", $.string),
@@ -799,26 +793,10 @@ module.exports = grammar({
         ),
         seq(
           "'''",
-          optional($.shebang),
-          repeat(
-            seq(
-              optional(
-                alias(
-                  token.immediate(prec(0, /[']{1,2}/)),
-                  $.string_internal_quote,
-                ),
-              ),
-              choice(
-                alias(
-                  token.immediate(prec(1, /([^\\']|[']{1,2}[^'\\])+/)),
-                  $.string_content,
-                ),
-                seq(
-                  optional(/[']{1,2}/), // edge case: these wont be in string_content
-                  $.escape_sequence,
-                ),
-              ),
-            ),
+          alias(optional($.shebang), $.code_language),
+          alias(
+            token.immediate(prec(1, /([^\\']|["]{1,2}[^\\'])+/)),
+            $.code_content,
           ),
           "'''",
         ),
@@ -839,22 +817,10 @@ module.exports = grammar({
         ),
         seq(
           '"""',
-          optional($.shebang),
-          repeat(
-            seq(
-              // optional(alias(token.immediate(prec(0, /["]{1,2}/)), $.string_internal_quote)),
-              choice(
-                alias(
-                  token.immediate(prec(1, /([^$\\"]|["]{1,2}[^"$\\])+/)),
-                  $.string_content,
-                ),
-                seq(
-                  optional(/["]{1,2}/), // edge case: these wont be in string_content
-                  $.escape_sequence,
-                ),
-                seq(optional(/["]{1,2}/), $.interpolation),
-              ),
-            ),
+          alias(optional($.shebang), $.code_language),
+          alias(
+            token.immediate(prec(1, /([^"]|["]{1,2}[^"])+/)),
+            $.code_content,
           ),
           '"""',
         ),
@@ -863,10 +829,9 @@ module.exports = grammar({
           "/",
           repeat1(
             choice(
-              alias(token.immediate(prec(1, /[^$\\\/]+/)), $.string_content),
+              alias(token.immediate(prec(1, /[^\\\/]+/)), $.string_content),
               alias("\\/", $.escape_sequence),
               alias(/\\[^\/]/, $.string_content),
-              $.interpolation,
             ),
           ),
           "/",
@@ -877,13 +842,11 @@ module.exports = grammar({
           repeat(
             choice(
               alias(
-                token.immediate(prec(1, /([^$\/]|\/[^$]|\$[^\/$a-zA-Z{])+/)),
+                token.immediate(prec(1, /([^\/]|\/.|\$[^\/a-zA-Z{])+/)),
                 $.string_content,
               ),
               alias("$/", $.escape_sequence),
               alias("$$", $.escape_sequence),
-              // alias(//, $.string_content),
-              $.interpolation,
             ),
           ),
           "/$",
@@ -920,7 +883,7 @@ module.exports = grammar({
                   $.string_content,
                 ),
                 seq(
-                  optional(/[']{1,2}/), // edge case: these wont be in string_content
+                  optional(/[']{1,2}/), // edge case: these wont be in string_span
                   $.escape_sequence,
                 ),
               ),
@@ -946,19 +909,16 @@ module.exports = grammar({
         seq(
           '"""',
           repeat(
-            seq(
-              // optional(alias(token.immediate(prec(0, /["]{1,2}/)), $.string_internal_quote)),
-              choice(
-                alias(
-                  token.immediate(prec(1, /([^$\\"]|["]{1,2}[^"$\\])+/)),
-                  $.string_content,
-                ),
-                seq(
-                  optional(/["]{1,2}/), // edge case: these wont be in string_content
-                  $.escape_sequence,
-                ),
-                seq(optional(/["]{1,2}/), $.interpolation),
+            choice(
+              alias(
+                token.immediate(prec(1, /([^$\\"]|["]{1,2}[^"$\\])+/)),
+                $.string_content,
               ),
+              seq(
+                optional(/["]{1,2}/), // edge case: these wont be in string_span
+                $.escape_sequence,
+              ),
+              seq(optional(/["]{1,2}/), $.interpolation),
             ),
           ),
           '"""',
@@ -987,7 +947,7 @@ module.exports = grammar({
               ),
               alias("$/", $.escape_sequence),
               alias("$$", $.escape_sequence),
-              // alias(//, $.string_content),
+              // alias(//, $.string_span),
               $.interpolation,
             ),
           ),

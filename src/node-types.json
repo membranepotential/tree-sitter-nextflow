@@ -3898,6 +3898,14 @@
       "required": false,
       "types": [
         {
+          "type": "code_content",
+          "named": true
+        },
+        {
+          "type": "code_language",
+          "named": true
+        },
+        {
           "type": "escape_sequence",
           "named": true
         },
@@ -3908,18 +3916,9 @@
         {
           "type": "string_content",
           "named": true
-        },
-        {
-          "type": "string_internal_quote",
-          "named": true
         }
       ]
     }
-  },
-  {
-    "type": "shebang",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "shell",
@@ -5484,10 +5483,6 @@
     "named": false
   },
   {
-    "type": "#!",
-    "named": false
-  },
-  {
     "type": "$",
     "named": false
   },
@@ -5800,6 +5795,14 @@
     "named": false
   },
   {
+    "type": "code_content",
+    "named": true
+  },
+  {
+    "type": "code_language",
+    "named": true
+  },
+  {
     "type": "continue",
     "named": true
   },
@@ -5990,6 +5993,10 @@
   {
     "type": "script:",
     "named": false
+  },
+  {
+    "type": "shebang",
+    "named": true
   },
   {
     "type": "shell:",

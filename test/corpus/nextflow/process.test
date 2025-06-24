@@ -1,6 +1,7 @@
 ==========
 Process block
 ==========
+#!/usr/bin/env nextflow
 process convert_to_upper {
     publishDir "results/upper"
     tag "$y"
@@ -13,11 +14,13 @@ process convert_to_upper {
 
     script:
     """
+    #!/bin/bash
     cat $y | tr '[a-z]' '[A-Z]' > upper_${y}
     """
 }
 ---
 (source_file
+  (shebang)
   (process
     name: (identifier)
     (juxt_function_call
@@ -34,8 +37,9 @@ process convert_to_upper {
     (output_block (path (string (string_content))))
     (script
       (script_string
-        (string_content)
-        (interpolation (identifier))
-        (string_content)
-        (interpolation (identifier))
-      ))))
+        (code_language)
+        (code_content)
+      )
+    )
+  )
+)

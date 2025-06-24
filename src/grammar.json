@@ -57,17 +57,15 @@
       ]
     },
     "shebang": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "#!"
-        },
-        {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 100,
+        "content": {
           "type": "PATTERN",
-          "value": "[^\\n]*"
+          "value": "\\#\\![^\\n]*"
         }
-      ]
+      }
     },
     "_statement": {
       "type": "PREC_LEFT",
@@ -932,13 +930,8 @@
           "value": "script:"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "string"
-          },
-          "named": true,
-          "value": "script_string"
+          "type": "SYMBOL",
+          "name": "script_string"
         }
       ]
     },
@@ -4386,90 +4379,37 @@
               "value": "'''"
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "shebang"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            },
-            {
-              "type": "REPEAT",
+              "type": "ALIAS",
               "content": {
-                "type": "SEQ",
+                "type": "CHOICE",
                 "members": [
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "ALIAS",
-                        "content": {
-                          "type": "IMMEDIATE_TOKEN",
-                          "content": {
-                            "type": "PREC",
-                            "value": 0,
-                            "content": {
-                              "type": "PATTERN",
-                              "value": "[']{1,2}"
-                            }
-                          }
-                        },
-                        "named": true,
-                        "value": "string_internal_quote"
-                      },
-                      {
-                        "type": "BLANK"
-                      }
-                    ]
+                    "type": "SYMBOL",
+                    "name": "shebang"
                   },
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "ALIAS",
-                        "content": {
-                          "type": "IMMEDIATE_TOKEN",
-                          "content": {
-                            "type": "PREC",
-                            "value": 1,
-                            "content": {
-                              "type": "PATTERN",
-                              "value": "([^\\\\']|[']{1,2}[^'\\\\])+"
-                            }
-                          }
-                        },
-                        "named": true,
-                        "value": "string_content"
-                      },
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "PATTERN",
-                                "value": "[']{1,2}"
-                              },
-                              {
-                                "type": "BLANK"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "escape_sequence"
-                          }
-                        ]
-                      }
-                    ]
+                    "type": "BLANK"
                   }
                 ]
-              }
+              },
+              "named": true,
+              "value": "code_language"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PREC",
+                  "value": 1,
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "([^\\\\']|[\"]{1,2}[^\\\\'])+"
+                  }
+                }
+              },
+              "named": true,
+              "value": "code_content"
             },
             {
               "type": "STRING",
@@ -4535,87 +4475,37 @@
               "value": "\"\"\""
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "shebang"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            },
-            {
-              "type": "REPEAT",
+              "type": "ALIAS",
               "content": {
-                "type": "SEQ",
+                "type": "CHOICE",
                 "members": [
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "ALIAS",
-                        "content": {
-                          "type": "IMMEDIATE_TOKEN",
-                          "content": {
-                            "type": "PREC",
-                            "value": 1,
-                            "content": {
-                              "type": "PATTERN",
-                              "value": "([^$\\\\\"]|[\"]{1,2}[^\"$\\\\])+"
-                            }
-                          }
-                        },
-                        "named": true,
-                        "value": "string_content"
-                      },
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "PATTERN",
-                                "value": "[\"]{1,2}"
-                              },
-                              {
-                                "type": "BLANK"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "escape_sequence"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "PATTERN",
-                                "value": "[\"]{1,2}"
-                              },
-                              {
-                                "type": "BLANK"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "interpolation"
-                          }
-                        ]
-                      }
-                    ]
+                    "type": "SYMBOL",
+                    "name": "shebang"
+                  },
+                  {
+                    "type": "BLANK"
                   }
                 ]
-              }
+              },
+              "named": true,
+              "value": "code_language"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PREC",
+                  "value": 1,
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "([^\"]|[\"]{1,2}[^\"])+"
+                  }
+                }
+              },
+              "named": true,
+              "value": "code_content"
             },
             {
               "type": "STRING",
@@ -4644,7 +4534,7 @@
                         "value": 1,
                         "content": {
                           "type": "PATTERN",
-                          "value": "[^$\\\\\\/]+"
+                          "value": "[^\\\\\\/]+"
                         }
                       }
                     },
@@ -4668,10 +4558,6 @@
                     },
                     "named": true,
                     "value": "string_content"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "interpolation"
                   }
                 ]
               }
@@ -4703,7 +4589,7 @@
                         "value": 1,
                         "content": {
                           "type": "PATTERN",
-                          "value": "([^$\\/]|\\/[^$]|\\$[^\\/$a-zA-Z{])+"
+                          "value": "([^\\/]|\\/.|\\$[^\\/a-zA-Z{])+"
                         }
                       }
                     },
@@ -4727,10 +4613,6 @@
                     },
                     "named": true,
                     "value": "escape_sequence"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "interpolation"
                   }
                 ]
               }
@@ -4947,68 +4829,63 @@
             {
               "type": "REPEAT",
               "content": {
-                "type": "SEQ",
+                "type": "CHOICE",
                 "members": [
                   {
-                    "type": "CHOICE",
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "IMMEDIATE_TOKEN",
+                      "content": {
+                        "type": "PREC",
+                        "value": 1,
+                        "content": {
+                          "type": "PATTERN",
+                          "value": "([^$\\\\\"]|[\"]{1,2}[^\"$\\\\])+"
+                        }
+                      }
+                    },
+                    "named": true,
+                    "value": "string_content"
+                  },
+                  {
+                    "type": "SEQ",
                     "members": [
                       {
-                        "type": "ALIAS",
-                        "content": {
-                          "type": "IMMEDIATE_TOKEN",
-                          "content": {
-                            "type": "PREC",
-                            "value": 1,
-                            "content": {
-                              "type": "PATTERN",
-                              "value": "([^$\\\\\"]|[\"]{1,2}[^\"$\\\\])+"
-                            }
-                          }
-                        },
-                        "named": true,
-                        "value": "string_content"
-                      },
-                      {
-                        "type": "SEQ",
+                        "type": "CHOICE",
                         "members": [
                           {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "PATTERN",
-                                "value": "[\"]{1,2}"
-                              },
-                              {
-                                "type": "BLANK"
-                              }
-                            ]
+                            "type": "PATTERN",
+                            "value": "[\"]{1,2}"
                           },
                           {
-                            "type": "SYMBOL",
-                            "name": "escape_sequence"
+                            "type": "BLANK"
                           }
                         ]
                       },
                       {
-                        "type": "SEQ",
+                        "type": "SYMBOL",
+                        "name": "escape_sequence"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "CHOICE",
                         "members": [
                           {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "PATTERN",
-                                "value": "[\"]{1,2}"
-                              },
-                              {
-                                "type": "BLANK"
-                              }
-                            ]
+                            "type": "PATTERN",
+                            "value": "[\"]{1,2}"
                           },
                           {
-                            "type": "SYMBOL",
-                            "name": "interpolation"
+                            "type": "BLANK"
                           }
                         ]
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "interpolation"
                       }
                     ]
                   }
