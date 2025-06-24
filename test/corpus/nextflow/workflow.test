@@ -1,0 +1,37 @@
+===
+Workflow block
+===
+workflow {
+    ch_str = channel.of(params.str)       // Create a channel using parameter input
+    ch_chunks = split(ch_str)             // Split string into chunks and create a named channel
+    convert_to_upper(ch_chunks.flatten()) // Convert lowercase letters to uppercase letters
+}
+---
+(source_file
+  (workflow
+      (assignment
+        (identifier)
+        (function_call
+          function: (dotted_identifier (identifier) (identifier))
+          args: (argument_list (dotted_identifier (identifier) (identifier)))
+        )
+      )
+      (comment)
+      (assignment
+        (identifier)
+        (function_call
+          function: (identifier)
+          args: (argument_list (identifier))
+        )
+      )
+      (comment)
+      (function_call
+        function: (identifier)
+        args: (argument_list
+          (function_call
+            function: (dotted_identifier (identifier) (identifier))
+            args: (argument_list)))
+      )
+      (comment)
+))
+

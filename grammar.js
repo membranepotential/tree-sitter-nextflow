@@ -47,7 +47,11 @@ module.exports = grammar({
 
   rules: {
     source_file: ($) =>
-      seq(optional($.shebang), repeat($._statement), optional($.pipeline)),
+      seq(
+        optional($.shebang),
+        repeat(choice($.include, $.process, $.workflow, $._statement)),
+        optional($.pipeline),
+      ),
 
     shebang: ($) => seq("#!", /[^\n]*/),
 
@@ -57,11 +61,6 @@ module.exports = grammar({
         seq(
           optional($.label),
           choice(
-            // nextflow-specific
-            //$.include,
-            //$.workflow,
-            $.process,
-            // generic groovy stuff
             $.assertion,
             $.groovy_import,
             $.groovy_package,
@@ -93,24 +92,149 @@ module.exports = grammar({
 
     label: ($) => seq(field("name", $.identifier), ":"),
 
+    include: ($) =>
+      seq(
+        "include",
+        "{",
+        seq($.include_clause, repeat(seq(choice(";", "\n"), $.include_clause))),
+        optional("\n"),
+        "}",
+        "from",
+        field("source", $.string),
+      ),
+
+    include_clause: ($) =>
+      seq(
+        field("name", $.identifier),
+        optional(seq("as", field("alias", $.identifier))),
+      ),
+
+    workflow: ($) =>
+      seq(
+        "workflow",
+        optional(field("name", $.identifier)),
+        "{",
+        choice(
+          repeat1($._statement),
+          seq($.wf_main, repeat(choice($.wf_take, $.wf_emit, $.wf_publish))),
+        ),
+        "}",
+      ),
+
+    wf_take: ($) => seq("take", ":", $.identifier),
+
+    wf_main: ($) => seq("main", ":", repeat1($._statement)),
+
+    wf_emit: ($) => seq("emit", ":", repeat1($.wf_output)),
+
+    wf_publish: ($) =>
+      seq(
+        "publish",
+        ":",
+        repeat1(prec.right(seq($._expression, ">>", $._expression))),
+      ),
+
+    wf_output: ($) =>
+      choice(
+        seq($.identifier, ".", $.identifier),
+        seq($.identifier, "=", $.identifier, ".", $.identifier),
+      ),
+
     process: ($) =>
       seq(
         "process",
         field("name", $.identifier),
         "{",
-        repeat($.juxt_function_call),
-        optional($.input_block),
-        optional($.output_block),
-        optional($.when_block),
-        choice($.script, $.shell, $.exec),
+        repeat(
+          choice(
+            $.input_block,
+            $.output_block,
+            $.script,
+            $.shell,
+            $.comment,
+            $.juxt_function_call,
+          ),
+        ),
         "}",
       ),
 
-    input_block: ($) => seq("input:", repeat1($.juxt_function_call)),
+    input_block: ($) =>
+      seq(
+        "input:",
+        choice($.input_val, $.path, $.env, "stdin", $.input_tuple, $.each),
+      ),
 
-    output_block: ($) => seq("output:", repeat1($.juxt_function_call)),
+    output_block: ($) =>
+      seq(
+        "output:",
+        seq(
+          choice($.output_val, $.path, $.env, "stdout", $.output_tuple, $.eval),
+          optional(seq("emit:", $.string)),
+          optional(seq("optional:", $.boolean_literal)),
+        ),
+      ),
 
-    when_block: ($) => seq("when:", repeat1($.juxt_function_call)),
+    path: ($) =>
+      seq(
+        "path",
+        choice(
+          $.string,
+          seq($.identifier, optional(seq(",", "name:", $.string))),
+        ),
+      ),
+
+    env: ($) => seq("env", $.string),
+
+    input_val: ($) => seq("val", $.identifier),
+
+    input_tuple: ($) =>
+      seq("tuple", choice($.input_val, $.path, $.env, "stdin")),
+
+    each: ($) => seq("each", $.identifier),
+
+    output_val: ($) => seq("val", choice($.identifier, $.string)),
+
+    output_tuple: ($) =>
+      seq("tuple", choice($.output_val, $.path, $.env, "stdout")),
+
+    eval: ($) => seq("eval", "(", $.string, ")"),
+
+    // directive: ($) =>
+    //   choice(
+    //     $.cpus,
+    //     $.memory,
+    //     $.container,
+    //     $.conda,
+    //     $.cache,
+    //     $.debug,
+    //     $.echo,
+    //     $.error_strategy,
+    //     $.executor,
+    //     $.label,
+    //     $.module,
+    //     $.publish_dir,
+    //     $.queue,
+    //     $.scratch,
+    //     $.tag,
+    //     $.time,
+    //   ),
+    //
+    // cpus: ($) => seq("cpus", $.number_literal),
+    // memory: ($) => seq("memory", $.string),
+    // container: ($) => seq("container", $._value),
+    // conda: ($) => seq("conda", $._value),
+    // cache: ($) => seq("cache", $._value),
+    // debug: ($) => seq("debug", $._value),
+    // echo: ($) => seq("echo", $._value),
+    // error_strategy: ($) => seq("errorStrategy", $._value),
+    // executor: ($) => seq("executor", $._value),
+    // label: ($) => seq("label", $._value),
+    // module: ($) => seq("module", $._value),
+    // publish_dir: ($) => seq("publishDir", $._value),
+    // queue: ($) => seq("queue", $._value),
+    // scratch: ($) => seq("scratch", $._value),
+    // tag: ($) => seq("tag", $._value),
+    // time: ($) => seq("time", $._value),
 
     script: ($) =>
       seq(

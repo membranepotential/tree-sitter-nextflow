@@ -667,10 +667,6 @@
           "named": true
         },
         {
-          "type": "process",
-          "named": true
-        },
-        {
           "type": "return",
           "named": true
         },
@@ -935,10 +931,6 @@
         },
         {
           "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "process",
           "named": true
         },
         {
@@ -1244,10 +1236,6 @@
             "named": true
           },
           {
-            "type": "process",
-            "named": true
-          },
-          {
             "type": "return",
             "named": true
           },
@@ -1345,163 +1333,45 @@
     }
   },
   {
-    "type": "exec",
+    "type": "each",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": false,
+      "multiple": false,
+      "required": true,
       "types": [
-        {
-          "type": "access_op",
-          "named": true
-        },
-        {
-          "type": "assertion",
-          "named": true
-        },
-        {
-          "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "binary_op",
-          "named": true
-        },
-        {
-          "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "break",
-          "named": true
-        },
-        {
-          "type": "class_definition",
-          "named": true
-        },
-        {
-          "type": "closure",
-          "named": true
-        },
-        {
-          "type": "continue",
-          "named": true
-        },
-        {
-          "type": "declaration",
-          "named": true
-        },
-        {
-          "type": "do_while_loop",
-          "named": true
-        },
-        {
-          "type": "dotted_identifier",
-          "named": true
-        },
-        {
-          "type": "for_in_loop",
-          "named": true
-        },
-        {
-          "type": "for_loop",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "function_declaration",
-          "named": true
-        },
-        {
-          "type": "function_definition",
-          "named": true
-        },
-        {
-          "type": "groovy_import",
-          "named": true
-        },
-        {
-          "type": "groovy_package",
-          "named": true
-        },
         {
           "type": "identifier",
           "named": true
-        },
-        {
-          "type": "if_statement",
-          "named": true
-        },
-        {
-          "type": "increment_op",
-          "named": true
-        },
-        {
-          "type": "index",
-          "named": true
-        },
-        {
-          "type": "juxt_function_call",
-          "named": true
-        },
-        {
-          "type": "label",
-          "named": true
-        },
-        {
-          "type": "list",
-          "named": true
-        },
-        {
-          "type": "map",
-          "named": true
-        },
-        {
-          "type": "null",
-          "named": true
-        },
-        {
-          "type": "number_literal",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "process",
-          "named": true
-        },
-        {
-          "type": "return",
-          "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "env",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
         {
           "type": "string",
           "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "eval",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
         {
-          "type": "switch_statement",
-          "named": true
-        },
-        {
-          "type": "ternary_op",
-          "named": true
-        },
-        {
-          "type": "try_statement",
-          "named": true
-        },
-        {
-          "type": "unary_op",
-          "named": true
-        },
-        {
-          "type": "while_loop",
+          "type": "string",
           "named": true
         }
       ]
@@ -1637,10 +1507,6 @@
           },
           {
             "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "process",
             "named": true
           },
           {
@@ -1897,10 +1763,6 @@
           },
           {
             "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "process",
             "named": true
           },
           {
@@ -2161,10 +2023,6 @@
           },
           {
             "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "process",
             "named": true
           },
           {
@@ -2750,10 +2608,6 @@
             "named": true
           },
           {
-            "type": "process",
-            "named": true
-          },
-          {
             "type": "return",
             "named": true
           },
@@ -2926,10 +2780,6 @@
             "named": true
           },
           {
-            "type": "process",
-            "named": true
-          },
-          {
             "type": "return",
             "named": true
           },
@@ -2959,6 +2809,58 @@
           },
           {
             "type": "while_loop",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "include",
+    "named": true,
+    "fields": {
+      "source": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "include_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "include_clause",
+    "named": true,
+    "fields": {
+      "alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -3100,11 +3002,65 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "each",
+          "named": true
+        },
+        {
+          "type": "env",
+          "named": true
+        },
+        {
+          "type": "input_tuple",
+          "named": true
+        },
+        {
+          "type": "input_val",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "input_tuple",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "env",
+          "named": true
+        },
+        {
+          "type": "input_val",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "input_val",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "juxt_function_call",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -3455,10 +3411,76 @@
     "fields": {},
     "children": {
       "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "env",
+          "named": true
+        },
+        {
+          "type": "eval",
+          "named": true
+        },
+        {
+          "type": "output_tuple",
+          "named": true
+        },
+        {
+          "type": "output_val",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "output_tuple",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "env",
+          "named": true
+        },
+        {
+          "type": "output_val",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "output_val",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "juxt_function_call",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -3679,6 +3701,25 @@
     }
   },
   {
+    "type": "path",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "pipeline",
     "named": true,
     "fields": {},
@@ -3710,10 +3751,10 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "exec",
+          "type": "comment",
           "named": true
         },
         {
@@ -3734,10 +3775,6 @@
         },
         {
           "type": "shell",
-          "named": true
-        },
-        {
-          "type": "when_block",
           "named": true
         }
       ]
@@ -3993,6 +4030,10 @@
           "named": true
         },
         {
+          "type": "include",
+          "named": true
+        },
+        {
           "type": "increment_op",
           "named": true
         },
@@ -4066,6 +4107,10 @@
         },
         {
           "type": "while_loop",
+          "named": true
+        },
+        {
+          "type": "workflow",
           "named": true
         }
       ]
@@ -4512,10 +4557,6 @@
             "named": true
           },
           {
-            "type": "process",
-            "named": true
-          },
-          {
             "type": "return",
             "named": true
           },
@@ -4764,7 +4805,7 @@
     }
   },
   {
-    "type": "when_block",
+    "type": "wf_emit",
     "named": true,
     "fields": {},
     "children": {
@@ -4772,7 +4813,275 @@
       "required": true,
       "types": [
         {
+          "type": "wf_output",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "wf_main",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "access_op",
+          "named": true
+        },
+        {
+          "type": "assertion",
+          "named": true
+        },
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "binary_op",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "break",
+          "named": true
+        },
+        {
+          "type": "class_definition",
+          "named": true
+        },
+        {
+          "type": "closure",
+          "named": true
+        },
+        {
+          "type": "continue",
+          "named": true
+        },
+        {
+          "type": "declaration",
+          "named": true
+        },
+        {
+          "type": "do_while_loop",
+          "named": true
+        },
+        {
+          "type": "dotted_identifier",
+          "named": true
+        },
+        {
+          "type": "for_in_loop",
+          "named": true
+        },
+        {
+          "type": "for_loop",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "function_definition",
+          "named": true
+        },
+        {
+          "type": "groovy_import",
+          "named": true
+        },
+        {
+          "type": "groovy_package",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "increment_op",
+          "named": true
+        },
+        {
+          "type": "index",
+          "named": true
+        },
+        {
           "type": "juxt_function_call",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "map",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "return",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "switch_statement",
+          "named": true
+        },
+        {
+          "type": "ternary_op",
+          "named": true
+        },
+        {
+          "type": "try_statement",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "while_loop",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "wf_output",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "wf_publish",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "access_op",
+          "named": true
+        },
+        {
+          "type": "binary_op",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "closure",
+          "named": true
+        },
+        {
+          "type": "dotted_identifier",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "increment_op",
+          "named": true
+        },
+        {
+          "type": "index",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "map",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "ternary_op",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "wf_take",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -4911,10 +5220,6 @@
             "named": true
           },
           {
-            "type": "process",
-            "named": true
-          },
-          {
             "type": "return",
             "named": true
           },
@@ -4959,6 +5264,196 @@
         ]
       }
     }
+  },
+  {
+    "type": "workflow",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "access_op",
+          "named": true
+        },
+        {
+          "type": "assertion",
+          "named": true
+        },
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "binary_op",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "break",
+          "named": true
+        },
+        {
+          "type": "class_definition",
+          "named": true
+        },
+        {
+          "type": "closure",
+          "named": true
+        },
+        {
+          "type": "continue",
+          "named": true
+        },
+        {
+          "type": "declaration",
+          "named": true
+        },
+        {
+          "type": "do_while_loop",
+          "named": true
+        },
+        {
+          "type": "dotted_identifier",
+          "named": true
+        },
+        {
+          "type": "for_in_loop",
+          "named": true
+        },
+        {
+          "type": "for_loop",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "function_definition",
+          "named": true
+        },
+        {
+          "type": "groovy_import",
+          "named": true
+        },
+        {
+          "type": "groovy_package",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "increment_op",
+          "named": true
+        },
+        {
+          "type": "index",
+          "named": true
+        },
+        {
+          "type": "juxt_function_call",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "map",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "return",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "switch_statement",
+          "named": true
+        },
+        {
+          "type": "ternary_op",
+          "named": true
+        },
+        {
+          "type": "try_statement",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "wf_emit",
+          "named": true
+        },
+        {
+          "type": "wf_main",
+          "named": true
+        },
+        {
+          "type": "wf_publish",
+          "named": true
+        },
+        {
+          "type": "wf_take",
+          "named": true
+        },
+        {
+          "type": "while_loop",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "\n",
+    "named": false
   },
   {
     "type": "!",
@@ -5325,7 +5820,23 @@
     "named": false
   },
   {
+    "type": "each",
+    "named": false
+  },
+  {
     "type": "else",
+    "named": false
+  },
+  {
+    "type": "emit",
+    "named": false
+  },
+  {
+    "type": "emit:",
+    "named": false
+  },
+  {
+    "type": "env",
     "named": false
   },
   {
@@ -5333,7 +5844,7 @@
     "named": true
   },
   {
-    "type": "exec:",
+    "type": "eval",
     "named": false
   },
   {
@@ -5365,6 +5876,10 @@
     "named": false
   },
   {
+    "type": "from",
+    "named": false
+  },
+  {
     "type": "groovy_doc_at_text",
     "named": true
   },
@@ -5389,6 +5904,10 @@
     "named": false
   },
   {
+    "type": "include",
+    "named": false
+  },
+  {
     "type": "input:",
     "named": false
   },
@@ -5409,6 +5928,14 @@
     "named": false
   },
   {
+    "type": "main",
+    "named": false
+  },
+  {
+    "type": "name:",
+    "named": false
+  },
+  {
     "type": "new",
     "named": false
   },
@@ -5417,11 +5944,19 @@
     "named": true
   },
   {
+    "type": "optional:",
+    "named": false
+  },
+  {
     "type": "output:",
     "named": false
   },
   {
     "type": "package",
+    "named": false
+  },
+  {
+    "type": "path",
     "named": false
   },
   {
@@ -5445,6 +5980,10 @@
     "named": false
   },
   {
+    "type": "publish",
+    "named": false
+  },
+  {
     "type": "return",
     "named": false
   },
@@ -5465,6 +6004,14 @@
     "named": false
   },
   {
+    "type": "stdin",
+    "named": false
+  },
+  {
+    "type": "stdout",
+    "named": false
+  },
+  {
     "type": "string_content",
     "named": true
   },
@@ -5481,6 +6028,10 @@
     "named": false
   },
   {
+    "type": "take",
+    "named": false
+  },
+  {
     "type": "this",
     "named": false
   },
@@ -5493,11 +6044,15 @@
     "named": false
   },
   {
-    "type": "void",
+    "type": "tuple",
     "named": false
   },
   {
-    "type": "when:",
+    "type": "val",
+    "named": false
+  },
+  {
+    "type": "void",
     "named": false
   },
   {
@@ -5507,6 +6062,10 @@
   {
     "type": "wildcard_import",
     "named": true
+  },
+  {
+    "type": "workflow",
+    "named": false
   },
   {
     "type": "{",

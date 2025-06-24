@@ -1,0 +1,41 @@
+==========
+Process block
+==========
+process convert_to_upper {
+    publishDir "results/upper"
+    tag "$y"
+
+    input:
+    path y
+
+    output:
+    path 'upper_*'
+
+    script:
+    """
+    cat $y | tr '[a-z]' '[A-Z]' > upper_${y}
+    """
+}
+---
+(source_file
+  (process
+    name: (identifier)
+    (juxt_function_call
+      function: (identifier)
+      args: (argument_list
+        (string (string_content))))
+    (juxt_function_call
+      function: (identifier)
+      args: (argument_list
+        (string
+          (interpolation
+            (identifier)))))
+    (input_block (path (identifier)))
+    (output_block (path (string (string_content))))
+    (script
+      (script_string
+        (string_content)
+        (interpolation (identifier))
+        (string_content)
+        (interpolation (identifier))
+      ))))

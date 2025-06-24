@@ -1,0 +1,51 @@
+===
+Include declaration
+===
+include { hello } from './some/module'
+include { func as funcAlias } from './other/module'
+---
+(source_file
+  (include
+    (include_clause
+      name: (identifier))
+    source: (string (string_content)))
+  (include
+    (include_clause
+      name: (identifier)
+      alias: (identifier))
+    source: (string (string_content)))
+)
+
+===
+Include with semi-colons
+===
+include { hallo ; bye as goodbye } from './some/module'
+---
+(source_file
+  (include
+    (include_clause
+      name: (identifier))
+    (include_clause
+      name: (identifier)
+      alias: (identifier))
+    source: (string (string_content)))
+)
+
+===
+Include with newlines
+===
+include {
+    hallo
+    bye as goodbye
+} from './some/module'
+---
+(source_file
+  (include
+    (include_clause
+      name: (identifier))
+    (include_clause
+      name: (identifier)
+      alias: (identifier))
+    source: (string (string_content)))
+)
+
