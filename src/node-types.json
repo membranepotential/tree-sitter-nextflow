@@ -5911,7 +5911,7 @@
     "named": false
   },
   {
-    "type": "input:",
+    "type": "input",
     "named": false
   },
   {
@@ -5951,7 +5951,7 @@
     "named": false
   },
   {
-    "type": "output:",
+    "type": "output",
     "named": false
   },
   {

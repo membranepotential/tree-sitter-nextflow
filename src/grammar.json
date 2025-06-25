@@ -610,7 +610,11 @@
       "members": [
         {
           "type": "STRING",
-          "value": "input:"
+          "value": "input"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
         },
         {
           "type": "CHOICE",
@@ -648,7 +652,11 @@
       "members": [
         {
           "type": "STRING",
-          "value": "output:"
+          "value": "output"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
         },
         {
           "type": "SEQ",

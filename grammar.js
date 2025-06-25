@@ -160,13 +160,15 @@ module.exports = grammar({
 
     input_block: ($) =>
       seq(
-        "input:",
+        "input",
+        ":",
         choice($.input_val, $.path, $.env, "stdin", $.input_tuple, $.each),
       ),
 
     output_block: ($) =>
       seq(
-        "output:",
+        "output",
+        ":",
         seq(
           choice($.output_val, $.path, $.env, "stdout", $.output_tuple, $.eval),
           optional(seq("emit:", $.string)),

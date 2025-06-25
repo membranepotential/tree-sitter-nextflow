@@ -34,7 +34,7 @@
 (null) @constant
 "this" @variable.builtin
 
-[ 
+[
   "int"
   "char"
   "short"
@@ -45,7 +45,7 @@
   "void"
 ] @type.builtin
 
-[ 
+[
   "final"
   "private"
   "protected"
@@ -79,7 +79,7 @@
 ((identifier) @constant
   (#match? @constant "^[A-Z][A-Z_]+"))
 
-[ 
+[
   "%" "*" "/" "+" "-" "<<" ">>" ">>>" ".." "..<" "<..<" "<.." "<"
   "<=" ">" ">=" "==" "!=" "<=>" "===" "!==" "=~" "==~" "&" "^" "|"
   "&&" "||" "?:" "+" "*" ".&" ".@" "?." "*." "*" "*:" "++" "--" "!"
@@ -111,34 +111,32 @@
 (assignment ("=") @operator)
 
 
-(function_call 
+(function_call
   function: (identifier) @function)
 (function_call
   function: (dotted_identifier
 	  (identifier) @function . ))
 (function_call (argument_list
 		 (map_item key: (identifier) @variable.parameter)))
-(juxt_function_call 
+(juxt_function_call
   function: (identifier) @function)
 (juxt_function_call
   function: (dotted_identifier
 	  (identifier) @function . ))
-(juxt_function_call (argument_list 
+(juxt_function_call (argument_list
 		      (map_item key: (identifier) @variable.parameter)))
 
-(function_definition 
+(function_definition
   function: (identifier) @function)
-(function_declaration 
+(function_declaration
   function: (identifier) @function)
 
 (annotation) @function.macro
 (annotation (identifier) @function.macro)
 "@interface" @function.macro
 
-"pipeline" @keyword
-
 (groovy_doc) @comment.documentation
-(groovy_doc 
+(groovy_doc
   [
     (groovy_doc_param)
     (groovy_doc_throws)
@@ -146,3 +144,11 @@
   ] @string.special)
 (groovy_doc (groovy_doc_param (identifier) @variable.parameter))
 (groovy_doc (groovy_doc_throws (identifier) @type))
+
+"process" @keyword
+"workflow" @keyword
+
+(process (input_block) @keyword)
+(process (output_block) @keyword)
+(process (script) @keyword)
+(process (shell) @keyword)
